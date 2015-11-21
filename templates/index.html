@@ -1,0 +1,49 @@
+{% macro user_form_inputs(user) -%}
+<input type="text" name="firstname" value="{{ user.firstname }}">
+<input type="text" name="lastname" value="{{ user.lastname }}">
+<input type="text" name="dob" value="{{ user.dob }}">
+<input type="text" name="zipcode" value="{{ user.zipcode }}">
+{% endmacro -%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ title }}</title>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <style>
+    form {
+      font-size: 0px;
+    }    
+    button.action-failed {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{{ heading }}</h1>
+  </header>
+  <section id="add">
+    <h1>Add</h1>
+    <form>
+      {{ user_form_inputs({})|indent(6) }}
+      <button name="add" type="button">Add</button>
+    </form>
+  </section>
+  <section id="exisiting">
+    <h1>Exisiting</h1>
+    <div id="user-entries">
+  {%- for user in users %}
+    <form>
+      <input type="hidden" name="id" value="{{ user.id }}">
+      {{ user_form_inputs(user)|indent(6) }}
+      <button name="update" type="button">Update</button>
+      <button name="remove" type="button">Remove</button>
+    </form>
+  {%- endfor -%}
+    </div>
+    <button name="more" type="button">More</button>
+  </section>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
